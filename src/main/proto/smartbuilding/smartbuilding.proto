@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+
+package smartbuilding;
+
+option java_package = "com.proto.smartbuilding";
+option java_multiple_files = true;
+
+//Welcome Services
+message TurnOn{
+  string first_name = 1;
+}
+
+message WelcomeResponse{
+  string greetMessage = 1;
+}
+
+message ClockResponse{
+  string time = 1;
+}
+
+service WelcomeService{
+  rpc welcomePage(TurnOn) returns(WelcomeResponse);
+  rpc time(TurnOn) returns(ClockResponse);
+}
+
+//UserLoginServices
+//Login() method
+message LoginRequest{
+  string username = 1;
+  string password = 2;
+}
+
+message LoginResponse{
+  bool loginResults = 1;
+}
+
+service UserLoginService{
+  rpc login(stream LoginRequest) returns(stream LoginResponse);
+}
+
+//mainService() method
+message MenuRequest{
+  string menu = 1;
+}
+message MenuResponse{
+  string menuResults = 1;
+}
+
+service MainService{
+  rpc mainMenu(MenuRequest) returns(MenuResponse);
+}
+
+//Trading Assistant Service
+//userInfor() method
+message UserInforRequest{
+  string lastNamePhone = 1;
+}
+
+message  UserInforResponse{
+  string uploadResults = 1;
+}
+
+service UserInfor{
+  rpc userInformation(stream UserInforRequest) returns(UserInforResponse);
+}
+
+//price() method
+message PriceRequest{
+  int32 stockNumber = 1;
+}
+message PriceResponse{
+  int32 stockPrice = 1;
+}
+
+service Pirce{
+  rpc stock(PriceRequest) returns(stream PriceResponse);
+}
+
+//calculation() method
+message ProfitRequest{
+  int32 costOfStock = 1;
+}
+message ProfitResponse{
+  int32 profitOfStock = 1;
+}
+
+service Calculation{
+  rpc profit(stream ProfitRequest) returns(stream ProfitResponse);
+}
+
+//client receive message
+message ClientRequest{
+  string clientMessage = 1;
+}
+message ServerResponse{
+  string serverMessage = 1;
+}
+
+service Communication{
+  rpc comu(ClientRequest) returns(ServerResponse);
+}
+
+
+
+
+
